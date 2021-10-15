@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Temperature Hot</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        body {
+            background: url(images/bg-image.jpg) no-repeat;
+            background-size: cover;
+            height: 100vh;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <form class="col-md-6 m-auto py-5">
+            <div class="input-group mb-3">
+                <input id="input" type="text" class="form-control" placeholder="Enter a location for Weather ...">
+                <div class="input-group-append">
+                    <button id="button" type="button" class="btn btn-danger">Search</button>
+                </div>
+            </div>
+        </form>
+        <div class="weather-status text-white text-center">
+            <img src="https://openweathermap.org/img/wn/02d@2x.png" alt="">
+            <h1 id="city-name">Dhaka</h1>
+            <h3><span id="temp">38.06</span>&deg;C</h3>
+            <h1 id="weather-status" class="lead">Clouds</h1>
+        </div>
+    </div>
+
+    <script>
+        const input = document.getElementById('input')
+        const button = document.getElementById('button')
+
+        button.addEventListener('click', function () {
+            fetch('https://api.openweathermap.org/data/2.5/weather?q=' + input.value + '&units=metric&appid=512a538d4e2850500ee809d20497048d')
+                .then(res => res.json())
+                .then(data => {
+                    const temperature = data.main.temp
+                    const city = data.name
+                    const weather = data.weather[0].description;
+                    console.log(weather)
+                    document.getElementById('city-name').innerText = city;
+                    document.getElementById('temp').innerText = temperature;
+                    document.getElementById('weather-status').innerText = weather;
+                })
+        })
+
+    </script>
+
+</body>
+
+</html>
